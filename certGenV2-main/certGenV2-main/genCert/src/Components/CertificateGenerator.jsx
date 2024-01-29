@@ -41,6 +41,9 @@ const CertificateGenerator = () => {
     //console.log(courseCode);
     const quiztknId = quiz[0].quiztknID;
 
+    const creditHours = quiz[0].quiz.course.start_date;
+    console.log(creditHours);
+
     // Calculate the percentage
     const quizScore = quiz[0].quiz_score;
     console.log(quiz[0].quiz_score);
@@ -133,17 +136,32 @@ const CertificateGenerator = () => {
       doc.setTextColor(162, 123, 66);
       doc.text(`B55-00${courseCode}`, 73, 163, { align: "left" });
 
-      // Credit hours display PDF
-      doc.setFontSize(11);
-      doc.setTextColor(162, 123, 66);
-      doc.text(`00hrs`, 72, 167.2, { align: "left" });
-
       // Date display small on bottom left
       const currentDate = new Date();
       const formattedDate = currentDate.toISOString().split("T")[0]; // Formats as "YYYY-MM-DD"
       doc.setFontSize(11);
       doc.setTextColor(162, 123, 66);
       doc.text(`${formattedDate}`, 90, 154, { align: "right" });
+
+      const startDate = new Date(creditHours);
+
+      // Calculate the time difference in milliseconds
+      const timeDifference = currentDate.getTime() - startDate.getTime();
+
+      // Calculate the number of days
+      const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+
+      // Calculate the credit hours based on a 3-hour interval per day
+      const calculatedCreditHours = daysDifference * 3;
+
+      console.log(`Calculated Credit Hours: ${calculatedCreditHours}`);
+      
+
+      // Credit Hours display PDF
+      doc.setFontSize(11);
+      doc.setTextColor(162, 123, 66);
+      doc.text(`${calculatedCreditHours} hrs`, 72, 167.2, { align: "left" });
+
 
       // Save the PDF file to send to the backend
       const pdfFile = new File([doc.output("blob")], `${name}-${course}.pdf`, {
