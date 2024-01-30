@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.sandboxv2.sandboxv2.dto.VerificationResponse;
 import com.example.sandboxv2.sandboxv2.entity.Certification;
 import com.example.sandboxv2.sandboxv2.entity.QuizTaken;
 import com.example.sandboxv2.sandboxv2.services.CertificationService;
@@ -90,5 +91,18 @@ public class CertificationController {
     public void deleteCertification(@PathVariable Long certificateID) {
         certificationService.deleteCertification(certificateID);
     }
+
+@GetMapping("/verify/{serial_no}")
+public ResponseEntity<List<VerificationResponse>> verifyCertification(@PathVariable String serial_no) {
+    List<VerificationResponse> certificationDetails = certificationService.getCertificationDetailsBySerialNumber(serial_no);
+
+    if (!certificationDetails.isEmpty()) {
+        return new ResponseEntity<>(certificationDetails, HttpStatus.OK);
+    } else {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+}
+
+
 }
 

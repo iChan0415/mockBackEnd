@@ -21,6 +21,7 @@ public class Certification{
     @ManyToOne
     @JoinColumn(name = "quiztkn_id")
     private QuizTaken quizTaken;
+    
 
     // @ManyToOne
     // @JoinColumn(name = "user_ID")

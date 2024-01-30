@@ -11,7 +11,7 @@ const CertificateGenerator = () => {
     const loadQuiz = async () => {
       try {
         const response = await fetch(
-          "http://localhost:8080/api/quizTkn/byUserId/3"
+          "http://localhost:8080/api/quizTkn/byUserId/1"
         );
         if (!response.ok) {
           throw new Error("Failed to fetch quiz data");
@@ -130,7 +130,7 @@ const CertificateGenerator = () => {
       doc.setFontSize(11);
       doc.setTextColor(162, 123, 66);
       doc.text(`B55-${serialNumber}`, 85, 158, { align: "left" });
-
+        
       // Coursecode display PDF
       doc.setFontSize(11);
       doc.setTextColor(162, 123, 66);
@@ -230,7 +230,16 @@ const CertificateGenerator = () => {
         </p>
       </div>
       <button onClick={generateCertificate}>Sumbit</button>
+
+
+
+        {/*Try Verification*/}
+
+    <h1>Verification</h1>
+
     </div>
+
+
   );
 };
 
